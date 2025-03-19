@@ -12,12 +12,29 @@ if not os.path.exists(DATA_DIR):
 
 # チームデータ
 TEAM_DATA = [
-    {"number": "T01", "name": "ロボ太郎", "university": "東京工科大学"},
-    {"number": "T02", "name": "メカニカ", "university": "大阪工業大学"},
-    {"number": "T03", "name": "テクノブレイン", "university": "京都大学"},
-    {"number": "T04", "name": "ロボマスターズ", "university": "名古屋大学"},
-    {"number": "T05", "name": "AI機械", "university": "東北大学"}
-]
+    { "number": "T01", "name": "蜜熊工房", "university": "群馬工業高等専門学校" },
+    { "number": "T02", "name": "はちのこ☆ロボコンズ", "university": "豊橋技術科学大学" },
+    { "number": "T03", "name": "ハニーワーカー", "university": "東京大学" },
+    { "number": "T04", "name": "回熊", "university": "横浜国立大学" },
+    { "number": "T05", "name": "精蜜研", "university": "千葉工業大学" },
+    { "number": "T06", "name": "しゅんぶんぶん", "university": "東京大学" },
+    { "number": "T07", "name": "大熊猫", "university": "福島工業高等専門学校" },
+    { "number": "T08", "name": "とある蜂蜜の射出機構", "university": "電気通信大学" },
+    { "number": "T09", "name": "大熊重信", "university": "早稲田大学" },
+    { "number": "T10", "name": "蜂蜂金蜜", "university": "金沢工業大学" },
+    { "number": "T11", "name": "ずっと最速で良いのに", "university": "早稲田大学" },
+    { "number": "T12", "name": "Maquinista", "university": "東京科学大学" },
+    { "number": "T13", "name": "科学技術研究部", "university": "新潟大学" },
+    { "number": "T14", "name": "B", "university": "千葉大学" },
+    { "number": "T15", "name": "情メカ", "university": "群馬大学" },
+    { "number": "T16", "name": "蜜のメカ探検隊", "university": "慶應義塾大学" },
+    { "number": "T17", "name": "ハニーギャザーズ", "university": "都立産業技術高等専門学校" },
+    { "number": "T18", "name": "はにかむメカ", "university": "東京工科大学" },
+    { "number": "T19", "name": "鵥", "university": "東京工業高等専門学校" },
+    { "number": "T20", "name": "ヴォイテック隊長", "university": "東京工業高等専門学校" },
+    { "number": "T21", "name": "BeeMead", "university": "東京工業高等専門学校" }
+];
+
 
 @app.route('/')
 def index():
