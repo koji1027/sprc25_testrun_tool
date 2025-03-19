@@ -1,0 +1,31 @@
+{
+  "date": "2025-03-19T02:36:29.690Z",
+  "teamNumber": "NO.02",
+  "teamName": "はちのこ☆ロボコンズ",
+  "university": "豊橋技術科学大学",
+  "totalTime": 1533,
+  "laps": [
+    {
+      "label": "",
+      "time": 550
+    },
+    {
+      "label": "",
+      "time": 150
+    },
+    {
+      "label": "",
+      "time": 134
+    },
+    {
+      "label": "",
+      "time": 699
+    }
+  ],
+  "eraserCollected": 0,
+  "eraserDelivered": 0,
+  "ballCollected": 0,
+  "ballDelivered": 0,
+  "vGoal": false,
+  "notes": ""
+}

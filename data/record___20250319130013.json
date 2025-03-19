@@ -1,0 +1,32 @@
+{
+  "date": "2025-03-19T04:00:13.557Z",
+  "teamNumber": "",
+  "teamName": "",
+  "university": "",
+  "totalTime": 1167,
+  "laps": [
+    {
+      "label": "",
+      "time": 317
+    },
+    {
+      "label": "",
+      "time": 133
+    },
+    {
+      "label": "",
+      "time": 151
+    },
+    {
+      "label": "",
+      "time": 566
+    }
+  ],
+  "eraserCollected": 0,
+  "eraserDelivered": 0,
+  "ballCollected": 0,
+  "ballDelivered": 0,
+  "vGoal": false,
+  "courtColor": "青",
+  "notes": ""
+}

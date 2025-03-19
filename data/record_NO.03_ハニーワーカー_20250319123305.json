@@ -1,0 +1,31 @@
+{
+  "date": "2025-03-19T03:33:05.918Z",
+  "teamNumber": "NO.03",
+  "teamName": "ハニーワーカー",
+  "university": "東京大学",
+  "totalTime": 1383,
+  "laps": [
+    {
+      "label": "",
+      "time": 350
+    },
+    {
+      "label": "",
+      "time": 167
+    },
+    {
+      "label": "",
+      "time": 133
+    },
+    {
+      "label": "",
+      "time": 733
+    }
+  ],
+  "eraserCollected": 1,
+  "eraserDelivered": 2,
+  "ballCollected": 2,
+  "ballDelivered": 2,
+  "vGoal": true,
+  "notes": "daf"
+}

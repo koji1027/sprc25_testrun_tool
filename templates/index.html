@@ -250,6 +250,12 @@
                 border-radius: 50%;
             }
 
+            .control-buttons {
+                margin-left: 10px;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+
             input:checked + .slider {
                 background-color: var(--success-color);
             }
@@ -445,6 +451,22 @@
                     <span class="slider"></span>
                 </label>
             </label>
+        </div>
+
+        <div class="toggle-container">
+            <h3>コートの色</h3>
+            <label class="toggle-label">
+                コートの色
+                <label class="toggle-switch">
+                    <input
+                        type="checkbox"
+                        id="court-color"
+                        name="court-color"
+                    />
+                    <span class="slider"></span>
+                </label>
+            </label>
+            <span id="court-color-label">青</span>
         </div>
 
         <div class="notes">
@@ -808,7 +830,6 @@
                 document.getElementById("notes").value = "";
             }
 
-            // 記録を保存する関数
             function saveRecord() {
                 const totalTime = lapTimes[lapTimes.length - 1].total;
 
@@ -835,6 +856,9 @@
                     });
                 }
 
+                // コートの色を取得
+                const courtColor = courtColorSwitch.checked ? "赤" : "青";
+
                 const record = {
                     date: new Date().toISOString(),
                     teamNumber,
@@ -855,6 +879,7 @@
                         document.getElementById("ball-delivered").textContent
                     ),
                     vGoal: document.getElementById("v-goal").checked,
+                    courtColor, // コートの色を追加
                     notes: document.getElementById("notes").value,
                 };
 
@@ -884,6 +909,19 @@
             resetBtn.addEventListener("click", resetTimer);
             sendBtn.addEventListener("click", saveRecord);
             sendBtnBottom.addEventListener("click", saveRecord);
+
+            // コートの色を切り替えるイベントリスナー
+            const courtColorSwitch = document.getElementById("court-color");
+            const courtColorLabel =
+                document.getElementById("court-color-label");
+
+            courtColorSwitch.addEventListener("change", function () {
+                if (this.checked) {
+                    courtColorLabel.textContent = "赤";
+                } else {
+                    courtColorLabel.textContent = "青";
+                }
+            });
         </script>
     </body>
 </html>

@@ -1,0 +1,31 @@
+{
+  "date": "2025-03-19T02:42:31.335Z",
+  "teamNumber": "",
+  "teamName": "",
+  "university": "",
+  "totalTime": 1583,
+  "laps": [
+    {
+      "label": "",
+      "time": 300
+    },
+    {
+      "label": "",
+      "time": 153
+    },
+    {
+      "label": "",
+      "time": 147
+    },
+    {
+      "label": "",
+      "time": 983
+    }
+  ],
+  "eraserCollected": 0,
+  "eraserDelivered": 0,
+  "ballCollected": 0,
+  "ballDelivered": 0,
+  "vGoal": false,
+  "notes": ""
+}

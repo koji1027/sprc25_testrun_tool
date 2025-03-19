@@ -1,0 +1,31 @@
+{
+  "date": "2025-03-19T03:56:49.651Z",
+  "teamNumber": "NO.06",
+  "teamName": "しゅんぶんぶん",
+  "university": "東京大学",
+  "totalTime": 3065,
+  "laps": [
+    {
+      "label": "",
+      "time": 1333
+    },
+    {
+      "label": "",
+      "time": 133
+    },
+    {
+      "label": "",
+      "time": 150
+    },
+    {
+      "label": "",
+      "time": 1449
+    }
+  ],
+  "eraserCollected": 3,
+  "eraserDelivered": 0,
+  "ballCollected": 0,
+  "ballDelivered": 3,
+  "vGoal": true,
+  "notes": "eghawawasdef"
+}
