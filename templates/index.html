@@ -455,6 +455,14 @@
             ></textarea>
         </div>
 
+        <div class="timer-container">
+            <div class="control-buttons">
+                <button id="send-btn-bottom" class="send-btn" disabled>
+                    送信
+                </button>
+            </div>
+        </div>
+
         <script>
             // チームデータ
             const teamData = [
@@ -600,6 +608,7 @@
             const resetBtn = document.getElementById("reset-btn");
             const sendBtn = document.getElementById("send-btn");
             const lapTimesContainer = document.getElementById("lap-times");
+            const sendBtnBottom = document.getElementById("send-btn-bottom");
 
             // カウンターの初期化
             document.querySelectorAll(".inc-btn").forEach((btn) => {
@@ -769,6 +778,7 @@
                 stopBtn.disabled = true;
                 resetBtn.disabled = false;
                 sendBtn.disabled = false;
+                sendBtnBottom.disabled = false;
             }
 
             // タイマーをリセットする関数
@@ -787,6 +797,7 @@
                 stopBtn.disabled = true;
                 resetBtn.disabled = false;
                 sendBtn.disabled = true;
+                sendBtnBottom.disabled = true;
 
                 // カウンターをリセット
                 document.getElementById("eraser-collected").textContent = "0";
@@ -872,6 +883,7 @@
             stopBtn.addEventListener("click", stopTimer);
             resetBtn.addEventListener("click", resetTimer);
             sendBtn.addEventListener("click", saveRecord);
+            sendBtnBottom.addEventListener("click", saveRecord);
         </script>
     </body>
 </html>
