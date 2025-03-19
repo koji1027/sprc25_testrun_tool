@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>春ロボ テストランUI</title>
+        <style>
+            :root {
+                --primary-color: #3f51b5;
+                --success-color: #4caf50;
+                --warning-color: #ff9800;
+                --danger-color: #f44336;
+                --light-gray: #f5f5f5;
+                --border-radius: 8px;
+            }
+
+            body {
+                font-family: "Segoe UI", Arial, sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fafafa;
+                color: #333;
+            }
+
+            h1,
+            h3 {
+                color: var(--primary-color);
+            }
+
+            .timer-container {
+                text-align: center;
+                margin-bottom: 30px;
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .timer-display {
+                font-size: 3em;
+                margin: 10px 0;
+                font-weight: bold;
+                color: var(--primary-color);
+            }
+
+            .team-selector {
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .team-info {
+                margin-top: 15px;
+                padding: 15px;
+                background-color: var(--light-gray);
+                border-radius: var(--border-radius);
+                display: none;
+            }
+
+            .team-info.visible {
+                display: block;
+            }
+
+            .lap-times {
+                margin-bottom: 20px;
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .lap-row {
+                display: flex;
+                margin-bottom: 10px;
+                padding: 8px;
+                background-color: var(--light-gray);
+                border-radius: var(--border-radius);
+            }
+
+            .control-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin: 20px 0;
+                flex-wrap: wrap;
+            }
+
+            button {
+                padding: 10px 18px;
+                font-size: 1em;
+                cursor: pointer;
+                border: none;
+                border-radius: var(--border-radius);
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            button:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+
+            .start-btn {
+                background-color: var(--success-color);
+                color: white;
+            }
+
+            .lap-btn {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .stop-btn {
+                background-color: var(--danger-color);
+                color: white;
+            }
+
+            .reset-btn {
+                background-color: #9e9e9e;
+                color: white;
+            }
+
+            .send-btn {
+                background-color: var(--warning-color);
+                color: white;
+            }
+
+            .task-counters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+
+            .counter-group {
+                flex: 1;
+                min-width: 200px;
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .counter {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                padding: 10px;
+                background-color: var(--light-gray);
+                border-radius: var(--border-radius);
+            }
+
+            .counter-label {
+                flex: 1;
+                font-weight: bold;
+            }
+
+            .counter-controls {
+                display: flex;
+                align-items: center;
+            }
+
+            .counter-value {
+                margin: 0 10px;
+                width: 30px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 1.2em;
+            }
+
+            .counter-max {
+                color: #666;
+                margin-left: 5px;
+            }
+
+            .counter-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 1.2em;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+            }
+
+            .dec-btn {
+                background-color: #e0e0e0;
+                color: #333;
+            }
+
+            .inc-btn {
+                background-color: var(--primary-color);
+                color: white;
+            }
+
+            .toggle-container {
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                margin-bottom: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .toggle-switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+                margin-left: 10px;
+            }
+
+            .toggle-switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: 0.4s;
+                border-radius: 34px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 26px;
+                left: 4px;
+                bottom: 4px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: var(--success-color);
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px var(--success-color);
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+
+            .toggle-label {
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100px;
+                margin-bottom: 20px;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: var(--border-radius);
+                resize: vertical;
+                font-family: inherit;
+            }
+
+            .notes {
+                background-color: white;
+                padding: 20px;
+                border-radius: var(--border-radius);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .lap-label {
+                flex: 1;
+                padding: 5px;
+                margin-right: 10px;
+            }
+
+            .label-input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            select {
+                padding: 10px;
+                border-radius: 4px;
+                border: 1px solid #ddd;
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 10px;
+                background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>春ロボ テストランUI</h1>
+
+        <div class="team-selector">
+            <h3>チーム選択</h3>
+            <select id="team-selector">
+                <option value="">チームを選択してください</option>
+                <!-- チームデータはJavaScriptで動的に入力されます -->
+            </select>
+            <div class="team-info" id="team-info">
+                <p>
+                    <strong>チーム番号:</strong> <span id="team-number"></span>
+                </p>
+                <p><strong>チーム名:</strong> <span id="team-name"></span></p>
+                <p><strong>大学名:</strong> <span id="university"></span></p>
+            </div>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-display" id="timer">00:00.000</div>
+            <div class="control-buttons">
+                <button id="start-btn" class="start-btn">スタート</button>
+                <button id="lap-btn" class="lap-btn" disabled>ラップ</button>
+                <button id="stop-btn" class="stop-btn" disabled>
+                    ストップ
+                </button>
+                <button id="reset-btn" class="reset-btn">リセット</button>
+                <button id="send-btn" class="send-btn" disabled>送信</button>
+            </div>
+        </div>
+
+        <div class="lap-times" id="lap-times">
+            <h3>ラップタイム</h3>
+            <!-- ラップタイムがここに表示されます -->
+        </div>
+
+        <div class="task-counters">
+            <div class="counter-group">
+                <h3>黒板消し</h3>
+                <div class="counter">
+                    <div class="counter-label">回収</div>
+                    <div class="counter-controls">
+                        <button
+                            class="counter-btn dec-btn"
+                            data-target="eraser-collected"
+                        >
+                            -
+                        </button>
+                        <span id="eraser-collected" class="counter-value"
+                            >0</span
+                        >
+                        <button
+                            class="counter-btn inc-btn"
+                            data-target="eraser-collected"
+                        >
+                            +
+                        </button>
+                        <span class="counter-max">/4</span>
+                    </div>
+                </div>
+                <div class="counter">
+                    <div class="counter-label">納品</div>
+                    <div class="counter-controls">
+                        <button
+                            class="counter-btn dec-btn"
+                            data-target="eraser-delivered"
+                        >
+                            -
+                        </button>
+                        <span id="eraser-delivered" class="counter-value"
+                            >0</span
+                        >
+                        <button
+                            class="counter-btn inc-btn"
+                            data-target="eraser-delivered"
+                        >
+                            +
+                        </button>
+                        <span class="counter-max">/4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="counter-group">
+                <h3>ボール</h3>
+                <div class="counter">
+                    <div class="counter-label">回収</div>
+                    <div class="counter-controls">
+                        <button
+                            class="counter-btn dec-btn"
+                            data-target="ball-collected"
+                        >
+                            -
+                        </button>
+                        <span id="ball-collected" class="counter-value">0</span>
+                        <button
+                            class="counter-btn inc-btn"
+                            data-target="ball-collected"
+                        >
+                            +
+                        </button>
+                        <span class="counter-max">/4</span>
+                    </div>
+                </div>
+                <div class="counter">
+                    <div class="counter-label">納品</div>
+                    <div class="counter-controls">
+                        <button
+                            class="counter-btn dec-btn"
+                            data-target="ball-delivered"
+                        >
+                            -
+                        </button>
+                        <span id="ball-delivered" class="counter-value">0</span>
+                        <button
+                            class="counter-btn inc-btn"
+                            data-target="ball-delivered"
+                        >
+                            +
+                        </button>
+                        <span class="counter-max">/4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toggle-container">
+            <h3>Vゴール</h3>
+            <label class="toggle-label">
+                達成状況
+                <label class="toggle-switch">
+                    <input type="checkbox" id="v-goal" name="v-goal" />
+                    <span class="slider"></span>
+                </label>
+            </label>
+        </div>
+
+        <div class="notes">
+            <h3>テストランコメント</h3>
+            <textarea
+                id="notes"
+                placeholder="テストランのコメントを記入してください"
+            ></textarea>
+        </div>
+
+        <script>
+            // チームデータ
+            const teamData = [
+                {
+                    number: "NO.01",
+                    name: "蜜熊工房",
+                    university: "群馬工業高等専門学校",
+                },
+                {
+                    number: "NO.02",
+                    name: "はちのこ☆ロボコンズ",
+                    university: "豊橋技術科学大学",
+                },
+                {
+                    number: "NO.03",
+                    name: "ハニーワーカー",
+                    university: "東京大学",
+                },
+                {
+                    number: "NO.04",
+                    name: "回熊",
+                    university: "横浜国立大学",
+                },
+                { number: "NO.05", name: "精蜜研", university: "千葉工業大学" },
+                {
+                    number: "NO.06",
+                    name: "しゅんぶんぶん",
+                    university: "東京大学",
+                },
+                {
+                    number: "NO.07",
+                    name: "大熊猫",
+                    university: "福島工業高等専門学校",
+                },
+                {
+                    number: "NO.08",
+                    name: "とある蜂蜜の射出機構 ",
+                    university: "電気通信大学",
+                },
+                {
+                    number: "NO.09",
+                    name: "大熊重信",
+                    university: "早稲田大学",
+                },
+                {
+                    number: "NO.10",
+                    name: "蜂蜂金蜜",
+                    university: "金沢工業大学",
+                },
+                {
+                    number: "NO.11",
+                    name: "ずっと最速で良いのに",
+                    university: "早稲田大学",
+                },
+                {
+                    number: "NO.12",
+                    name: "Maquinista",
+                    university: "東京科学大学",
+                },
+                {
+                    number: "NO.13",
+                    name: "科学技術研究部",
+                    university: "新潟大学",
+                },
+                {
+                    number: "NO.14",
+                    name: "B",
+                    university: "千葉大学",
+                },
+                { number: "NO.15", name: "情メカ", university: "群馬大学" },
+                {
+                    number: "NO.16",
+                    name: "蜜のメカ探検隊",
+                    university: "慶應義塾大学",
+                },
+                {
+                    number: "NO.17",
+                    name: "ハニーギャザーズ",
+                    university: "都立産業技術高等専門学校",
+                },
+                {
+                    number: "NO.18",
+                    name: "はにかむメカ ",
+                    university: "東京工科大学",
+                },
+                {
+                    number: "NO.19",
+                    name: "鵥",
+                    university: "東京工業高等専門学校",
+                },
+                {
+                    number: "NO.20",
+                    name: "ヴォイテック隊長",
+                    university: "東京工業高等専門学校",
+                },
+                {
+                    number: "NO.21",
+                    name: "BeeMead",
+                    university: "東京工業高等専門学校",
+                },
+            ];
+
+            // チームセレクタを初期化
+            const teamSelector = document.getElementById("team-selector");
+            teamData.forEach((team) => {
+                const option = document.createElement("option");
+                option.value = team.number;
+                option.textContent = `${team.number} - ${team.name}`;
+                teamSelector.appendChild(option);
+            });
+
+            // チーム選択時のイベント
+            teamSelector.addEventListener("change", function () {
+                const teamInfo = document.getElementById("team-info");
+                const selectedTeam = teamData.find(
+                    (team) => team.number === this.value
+                );
+
+                if (selectedTeam) {
+                    document.getElementById("team-number").textContent =
+                        selectedTeam.number;
+                    document.getElementById("team-name").textContent =
+                        selectedTeam.name;
+                    document.getElementById("university").textContent =
+                        selectedTeam.university;
+                    teamInfo.classList.add("visible");
+                } else {
+                    teamInfo.classList.remove("visible");
+                }
+            });
+
+            let startTime = null;
+            let lapTimes = [];
+            let timerInterval = null;
+            let isRunning = false;
+            let lapCount = 0;
+            const MAX_LAPS = 3;
+
+            const timerDisplay = document.getElementById("timer");
+            const startBtn = document.getElementById("start-btn");
+            const lapBtn = document.getElementById("lap-btn");
+            const stopBtn = document.getElementById("stop-btn");
+            const resetBtn = document.getElementById("reset-btn");
+            const sendBtn = document.getElementById("send-btn");
+            const lapTimesContainer = document.getElementById("lap-times");
+
+            // カウンターの初期化
+            document.querySelectorAll(".inc-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    const value = parseInt(target.textContent);
+                    if (value < 4) {
+                        target.textContent = value + 1;
+                    }
+                });
+            });
+
+            document.querySelectorAll(".dec-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const target = document.getElementById(btn.dataset.target);
+                    const value = parseInt(target.textContent);
+                    if (value > 0) {
+                        target.textContent = value - 1;
+                    }
+                });
+            });
+
+            // タイマー表示を更新する関数
+            function updateTimer() {
+                if (!isRunning) return;
+
+                const now = new Date().getTime();
+                const elapsed = now - startTime;
+
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                const milliseconds = elapsed % 1000;
+
+                timerDisplay.textContent = `${minutes
+                    .toString()
+                    .padStart(2, "0")}:${seconds
+                    .toString()
+                    .padStart(2, "0")}.${milliseconds
+                    .toString()
+                    .padStart(3, "0")}`;
+            }
+
+            // ラップタイムを追加する関数
+            function addLapTime() {
+                if (!isRunning || lapCount >= MAX_LAPS) return;
+
+                const now = new Date().getTime();
+                const total = now - startTime;
+                const prev =
+                    lapTimes.length > 0
+                        ? lapTimes[lapTimes.length - 1].total
+                        : 0;
+                const lap = total - prev;
+
+                lapTimes.push({ total, lap });
+                lapCount++;
+
+                const lapRow = document.createElement("div");
+                lapRow.className = "lap-row";
+
+                const lapLabel = document.createElement("div");
+                lapLabel.className = "lap-label";
+
+                const labelInput = document.createElement("input");
+                labelInput.type = "text";
+                labelInput.className = "label-input";
+                // 各ラップタイムにデフォルトでラベルを設定(それぞれ定数とする。)
+                const lapLabels = [
+                    "",
+                    "黒板消し回収",
+                    "ボール回収",
+                    "スラローム",
+                ];
+                labelInput.placeholder = lapLabels[lapCount];
+                labelInput.id = `lap-label-${lapCount}`;
+
+                lapLabel.appendChild(labelInput);
+
+                const lapTime = document.createElement("div");
+                lapTime.className = "lap-time"; // クラス名を追加
+                const minutes = Math.floor(lap / 60000);
+                const seconds = Math.floor((lap % 60000) / 1000);
+                const milliseconds = lap % 1000;
+                lapTime.textContent = `${minutes
+                    .toString()
+                    .padStart(2, "0")}:${seconds
+                    .toString()
+                    .padStart(2, "0")}.${milliseconds
+                    .toString()
+                    .padStart(3, "0")}`;
+
+                lapRow.appendChild(lapLabel);
+                lapRow.appendChild(lapTime);
+                lapTimesContainer.appendChild(lapRow);
+
+                if (lapCount >= MAX_LAPS) {
+                    lapBtn.disabled = true;
+                }
+            }
+
+            // タイマーをスタートする関数
+            function startTimer() {
+                if (isRunning) return;
+
+                isRunning = true;
+                startTime = new Date().getTime();
+                timerInterval = setInterval(updateTimer, 10);
+
+                startBtn.disabled = true;
+                lapBtn.disabled = false;
+                stopBtn.disabled = false;
+                resetBtn.disabled = true;
+            }
+
+            // タイマーをストップする関数
+            function stopTimer() {
+                if (!isRunning) return;
+
+                isRunning = false;
+                clearInterval(timerInterval);
+
+                // 最後のラップを追加
+                const now = new Date().getTime();
+                const total = now - startTime;
+                const prev =
+                    lapTimes.length > 0
+                        ? lapTimes[lapTimes.length - 1].total
+                        : 0;
+                const lap = total - prev;
+
+                lapTimes.push({ total, lap });
+
+                // 最後のラップ時間を表示する部分
+                const lapRow = document.createElement("div");
+                lapRow.className = "lap-row";
+
+                const lapLabel = document.createElement("div");
+                lapLabel.className = "lap-label";
+
+                const labelInput = document.createElement("input");
+                labelInput.type = "text";
+                labelInput.className = "label-input";
+                labelInput.placeholder = `最終タイム`;
+                labelInput.id = `lap-label-final`;
+
+                lapLabel.appendChild(labelInput);
+
+                const lapTime = document.createElement("div");
+                lapTime.className = "lap-time"; // クラス名を追加
+                const minutes = Math.floor(lap / 60000);
+                const seconds = Math.floor((lap % 60000) / 1000);
+                const milliseconds = lap % 1000;
+                lapTime.textContent = `${minutes
+                    .toString()
+                    .padStart(2, "0")}:${seconds
+                    .toString()
+                    .padStart(2, "0")}.${milliseconds
+                    .toString()
+                    .padStart(3, "0")}`;
+
+                lapRow.appendChild(lapLabel);
+                lapRow.appendChild(lapTime);
+                lapTimesContainer.appendChild(lapRow);
+
+                startBtn.disabled = true;
+                lapBtn.disabled = true;
+                stopBtn.disabled = true;
+                resetBtn.disabled = false;
+                sendBtn.disabled = false;
+            }
+
+            // タイマーをリセットする関数
+            function resetTimer() {
+                isRunning = false;
+                clearInterval(timerInterval);
+                startTime = null;
+                lapTimes = [];
+                lapCount = 0;
+
+                timerDisplay.textContent = "00:00.000";
+                lapTimesContainer.innerHTML = "<h3>ラップタイム</h3>";
+
+                startBtn.disabled = false;
+                lapBtn.disabled = true;
+                stopBtn.disabled = true;
+                resetBtn.disabled = false;
+                sendBtn.disabled = true;
+
+                // カウンターをリセット
+                document.getElementById("eraser-collected").textContent = "0";
+                document.getElementById("eraser-delivered").textContent = "0";
+                document.getElementById("ball-collected").textContent = "0";
+                document.getElementById("ball-delivered").textContent = "0";
+                document.getElementById("v-goal").checked = false;
+                document.getElementById("notes").value = "";
+            }
+
+            // 記録を保存する関数
+            function saveRecord() {
+                const totalTime = lapTimes[lapTimes.length - 1].total;
+
+                // チーム情報を取得
+                const teamNumber =
+                    document.getElementById("team-number").textContent;
+                const teamName =
+                    document.getElementById("team-name").textContent;
+                const university =
+                    document.getElementById("university").textContent;
+
+                const laps = [];
+                for (let i = 0; i < lapTimes.length; i++) {
+                    const labelId =
+                        i === lapTimes.length - 1
+                            ? "lap-label-final"
+                            : `lap-label-${i + 1}`;
+                    const labelInput = document.getElementById(labelId);
+                    const label = labelInput ? labelInput.value : "";
+
+                    laps.push({
+                        label,
+                        time: lapTimes[i].lap,
+                    });
+                }
+
+                const record = {
+                    date: new Date().toISOString(),
+                    teamNumber,
+                    teamName,
+                    university,
+                    totalTime,
+                    laps,
+                    eraserCollected: parseInt(
+                        document.getElementById("eraser-collected").textContent
+                    ),
+                    eraserDelivered: parseInt(
+                        document.getElementById("eraser-delivered").textContent
+                    ),
+                    ballCollected: parseInt(
+                        document.getElementById("ball-collected").textContent
+                    ),
+                    ballDelivered: parseInt(
+                        document.getElementById("ball-delivered").textContent
+                    ),
+                    vGoal: document.getElementById("v-goal").checked,
+                    notes: document.getElementById("notes").value,
+                };
+
+                // サーバーに送信
+                fetch("/save_record", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(record),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert("記録が保存されました");
+                        console.log("保存された記録:", record);
+                    })
+                    .catch((error) => {
+                        console.error("記録の保存に失敗しました:", error);
+                        alert("記録の保存に失敗しました");
+                    });
+            }
+
+            // イベントリスナーの設定
+            startBtn.addEventListener("click", startTimer);
+            lapBtn.addEventListener("click", addLapTime);
+            stopBtn.addEventListener("click", stopTimer);
+            resetBtn.addEventListener("click", resetTimer);
+            sendBtn.addEventListener("click", saveRecord);
+        </script>
+    </body>
+</html>
