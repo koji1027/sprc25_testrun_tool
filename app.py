@@ -111,7 +111,7 @@ def save_record():
                 data.get("date", ""),  # 日付
                 data.get("teamNumber", ""),  # チーム番号
                 data.get("teamName", ""),  # チーム名
-                university,  # 大学名
+                data.university,  # 大学名
                 data.get("laps", "")[0]["time"],  # 黒板消し回収タイム
                 data.get("laps", "")[1]["time"],  # ボール回収タイム
                 data.get("laps", "")[2]["time"],  # スラロームタイム
